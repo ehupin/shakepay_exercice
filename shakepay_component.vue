@@ -19,7 +19,7 @@ export default {
         'CAD_BTC': 'https://shakepay.github.io/programming-exercise/web/rates_CAD_BTC.json',
         'CAD_ETH': 'https://shakepay.github.io/programming-exercise/web/rates_CAD_ETH.json'
       },
-      rates: {
+      staticRates: {
         "CAD_BTC":0.00001919,
         "BTC_CAD":52100.34,
         "CAD_ETH":0.000466801578448052,
@@ -52,8 +52,10 @@ export default {
     }
 
     function getRate(pair, dateStr){
+      console.log(pair)
+      if (!Object.keys(ratesHistory).includes(pair))
       const unixDate = moment(dateStr).unix()
-      for (const [index, entry] of ratesHistory.entries()){
+      for (const [index, entry] of ratesHistory[pair].entries()){
         if (entry.createdAt < unixDate){
           continue
         }
@@ -83,13 +85,17 @@ export default {
         // compute how much has been sold during conversion
         let fromAmount = record.from.amount
         if (record.from.currency !== this.mainCurrency){
-          fromAmount *= this.rates[pair]
+          const rate = getRate(pair, record.createdAt)
+          fromAmount *= rate
+          // fromAmount *= this.staticRates[pair]
         }
 
         // compute how much has been bougth during conversion
         let toAmount = record.to.amount
         if (record.to.currency !== this.mainCurrency){
-          toAmount /= this.rates[pair]
+          const rate = getRate(pair, record.createdAt)
+          fromAmount /= rate
+          // toAmount /= this.staticRates[pair]
         }
 
         // compute new amount after conversion
@@ -101,7 +107,7 @@ export default {
         let recordAmount = record.amount
         if (record.currency !== this.mainCurrency){
           const pair = `${record.currency}_${this.mainCurrency}`
-          recordAmount *= this.rates[pair]
+          recordAmount *= this.staticRates[pair]
         }
 
         // compute new amount based on record operation direction
