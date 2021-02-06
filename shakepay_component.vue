@@ -104,14 +104,14 @@ export default {
         // compute how much has been sold during conversion
         let fromAmount = record.from.amount
         if (record.from.currency !== this.mainCurrency){
-          const {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
+          let {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
           fromAmount *= rate
         }
 
         // compute how much has been bougth during conversion
         let toAmount = record.to.amount
         if (record.to.currency !== this.mainCurrency){
-          const {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
+          let {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
           fromAmount /= rate
         }
 
@@ -123,13 +123,22 @@ export default {
 
 
       } else {
+
         // handle record amount conversion if operation has not been done in main currency
         let recordAmount = record.amount
-        if (record.currency !== this.mainCurrency){
+        if (record.currency !== this.mainCurrency) {
           const pair = `${record.currency}_${this.mainCurrency}`
-          const {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
+
+          // get history rate index for faster lookup
+          let ratesHistoryPairIndex = lastRateHistoryPairIndex[pair] -1
+
+          let {rate, index} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
           recordAmount *= rate
+
+          // store history rate index for faster future lookups
+          lastRateHistoryPairIndex[pair] = index
         }
+
 
         // compute new amount based on record operation direction
         const amountFactor = record.direction === 'credit' ? 1 : -1
