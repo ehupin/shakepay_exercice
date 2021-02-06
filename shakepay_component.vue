@@ -37,11 +37,15 @@ export default {
       const lastEntry = graphEntries[graphEntries.length-1]
       const lastAmount = lastEntry ? lastEntry.y : 0
 
-      if (record.type  === 'conversion'){
+      if (record.currency !== 'CAD'){
         
+      }
+
+      let newAmount = lastAmount
+      if (record.type  === 'conversion'){
       } else {
         const amountFactor = record.direction === 'credit' ? 1 : -1
-        const newAmount = lastAmount + (record.amount * amountFactor)
+        newAmount += (record.amount * amountFactor)
       }
 
       const newEntry = {
