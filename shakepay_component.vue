@@ -13,6 +13,10 @@ export default {
   data(){
     return {
       historyJson: 'https://shakepay.github.io/programming-exercise/web/transaction_history.json',
+      ratesHistoryJson:{
+        'CAD_BTC': 'https://shakepay.github.io/programming-exercise/web/rates_CAD_BTC.json',
+        'CAD_ETH': 'https://shakepay.github.io/programming-exercise/web/rates_CAD_ETH.json'
+      },
       rates: {
         "CAD_BTC":0.00001919,
         "BTC_CAD":52100.34,
@@ -30,6 +34,10 @@ export default {
   },
   async mounted(){
     let history = (await $.getJSON(this.historyJson)).reverse()
+    let ratesHistory = {}
+    for (let key of object.keys(this.ratesHistoryJson)){
+      
+    }
 
     const graphEntries = []
     for (let i=0; i<history.length; i++){
@@ -38,7 +46,7 @@ export default {
       const lastAmount = lastEntry ? lastEntry.y : 0
 
       if (record.currency !== 'CAD'){
-        
+
       }
 
       let newAmount = lastAmount
