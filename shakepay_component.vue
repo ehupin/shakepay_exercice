@@ -55,20 +55,17 @@ export default {
 
     // get all transactions history
     let history = (await $.getJSON(this.historyJson)).reverse()
-    // history = history.splice(0,100)
 
     const lastRateHistoryPairIndex = {}
     const graphEntries = []
     for (let i=0; i<history.length; i++){
-    // for (let i=0; i<30; i++){
       const record = history[i]
       const lastEntry = graphEntries[graphEntries.length-1]
       const lastAmount = lastEntry ? lastEntry.y : 0
 
-
-
       let newAmount = lastAmount
       let description = ''
+
       // as some value might be lost during conversion due to fees, a conversion cannot be considered as having no
       // impact on the net worth
       if (record.type  === 'conversion'){
@@ -120,12 +117,6 @@ export default {
           let {rate, index} = this.getRate(pair, record.createdAt, ratesHistoryPairIndex)
           recordAmount *= rate
 
-          if (record.createdAt == "2018-03-29T21:20:31.768Z"){
-            console.log(pair)
-            console.log(rate)
-          }
-
-
           // store history rate index for faster future lookups
           lastRateHistoryPairIndex[pair] = index
         }
@@ -150,8 +141,8 @@ export default {
       }
       graphEntries.push(newEntry)
     }
-    console.log(graphEntries)
 
+    // setup chart options, then create it
     const chartData = {
       series:[{
         name: 'net worth',
@@ -188,9 +179,6 @@ export default {
       for (const [index, entry] of this.ratesHistory[lookupPair].slice(ratesHistoryPairIndex).entries()){
         if (entry.createdAt < unixDate){
           continue
-        }
-        if (dateStr == "2018-03-29T21:20:31.768Z"){
-          console.log(entry)
         }
 
         const rate = reverseRate ? entry.midMarketRate : 1/entry.midMarketRate

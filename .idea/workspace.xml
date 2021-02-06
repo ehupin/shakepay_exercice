@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ddb973b-bc80-4ca4-b0b5-931c4a18408e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shakepay_component.vue" beforeDir="false" afterPath="$PROJECT_DIR$/shakepay_component.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../shakepay_test/exercice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shakepay_test/exercice/.idea/workspace.xml" afterDir="false" />
@@ -39,7 +40,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1612626357334</updated>
-      <workItem from="1612626358524" duration="10627000" />
+      <workItem from="1612626358524" duration="10992000" />
     </task>
     <servers />
   </component>
