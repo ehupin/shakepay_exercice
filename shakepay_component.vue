@@ -104,7 +104,7 @@ export default {
         description = `Conversion from `
         description += `${record.from.amount} ${record.from.currency} `
         description += `to ${record.to.amount} ${record.to.currency}`
-        description += `at ${pairRate} on ${pair}`
+        description += ` at ${pairRate.toFixed(7)} on ${pair}`
 
 
       } else {
@@ -127,11 +127,17 @@ export default {
 
         // compute new amount based on record operation direction
         const amountFactor = record.direction === 'credit' ? 1 : -1
-        newAmount += (recordAmount * amountFactor)
+        const transactionAmount = recordAmount * amountFactor
+        newAmount += transactionAmount
+
+        if (record.createdAt == "2018-03-29T21:20:31.768Z"){
+          console.log(transactionAmount)
+          console.log(newAmount)
+        }
 
         description = `${record.direction} of ${record.amount} ${record.currency}`
         if (record.currency !== this.mainCurrency) {
-          description += `(${recordAmount.toFixed(3)} ${this.mainCurrency})`
+          description += `(${transactionAmount.toFixed(3)} ${this.mainCurrency})`
         }
       }
 
