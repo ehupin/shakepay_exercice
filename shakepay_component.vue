@@ -8,6 +8,7 @@
 
 <script>
 import $ from "jquery";
+import moment from 'moment'
 
 export default {
   data(){
@@ -34,7 +35,8 @@ export default {
     }
   },
   async mounted(){
-
+    console.log(moment("2018-07-19T00:00:00.000Z").unix())
+    return
     let ratesHistory = {}
     for (let pair of Object.keys(this.ratesHistoryJson)){
       const pairRatesURL = this.ratesHistoryJson[pair]
@@ -42,12 +44,12 @@ export default {
       ratesHistory[pair] = pairRates
     }
 
-    function getRate(pair, time, lastIndex){
-      for (const [index, entry] of ratesHistory.entries()){
-        
-      }
-    }
-
+    // function getRate(pair, timeStr, lastIndex){
+    //   const time =
+    //   for (const [index, entry] of ratesHistory.entries()){
+    //   }
+    // }
+    return
     let history = (await $.getJSON(this.historyJson)).reverse()
 
     const graphEntries = []
