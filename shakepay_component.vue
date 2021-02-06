@@ -33,13 +33,15 @@ export default {
     }
   },
   async mounted(){
-    let history = (await $.getJSON(this.historyJson)).reverse()
+
     let ratesHistory = {}
     for (let pair of object.keys(this.ratesHistoryJson)){
       const pairRatesURL = this.ratesHistoryJson[pair]
       const pairRates = await $.getJSON(pairRatesURL)
-      
+      ratesHistory[pair] = pairRates
     }
+
+    let history = (await $.getJSON(this.historyJson)).reverse()
 
     const graphEntries = []
     for (let i=0; i<history.length; i++){
@@ -47,12 +49,16 @@ export default {
       const lastEntry = graphEntries[graphEntries.length-1]
       const lastAmount = lastEntry ? lastEntry.y : 0
 
-      if (record.currency !== 'CAD'){
 
-      }
 
       let newAmount = lastAmount
       if (record.type  === 'conversion'){
+
+        if (record.from.currency !== 'CAD'){
+          recordAmount
+        }
+
+
       } else {
         const amountFactor = record.direction === 'credit' ? 1 : -1
         newAmount += (record.amount * amountFactor)
