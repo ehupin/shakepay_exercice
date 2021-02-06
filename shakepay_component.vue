@@ -35,21 +35,26 @@ export default {
     }
   },
   async mounted(){
-    console.log(moment("2018-07-19T00:00:00.000Z").unix())
-    return
     let ratesHistory = {}
     for (let pair of Object.keys(this.ratesHistoryJson)){
       const pairRatesURL = this.ratesHistoryJson[pair]
       const pairRates = await $.getJSON(pairRatesURL)
-      ratesHistory[pair] = pairRates
+      const processedPairRates = []
+      for (let i=0; i<pairRates.length; i++){
+        const rateRecord = pairRates[i]
+        processedPairRates.push({...rateRecord, createdAt: moment(rateRecord.createdAt).unix()})
+      }
+
+      ratesHistory[pair] = processedPairRates
+    }
+    console.log(ratesHistory)
+    return
+    function getRate(pair, timeStr, lastIndex){
+      const time = moment(timeStr).unix()
+      for (const [index, entry] of ratesHistory.entries()){
+      }
     }
 
-    // function getRate(pair, timeStr, lastIndex){
-    //   const time =
-    //   for (const [index, entry] of ratesHistory.entries()){
-    //   }
-    // }
-    return
     let history = (await $.getJSON(this.historyJson)).reverse()
 
     const graphEntries = []
