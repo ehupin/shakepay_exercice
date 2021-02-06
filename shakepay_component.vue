@@ -55,7 +55,7 @@ export default {
 
     // get all transactions history
     let history = (await $.getJSON(this.historyJson)).reverse()
-    history = history.splice(0,100)
+    // history = history.splice(0,100)
 
     const lastRateHistoryPairIndex = {}
     const graphEntries = []
@@ -84,7 +84,7 @@ export default {
         let pairRate
         if (record.from.currency !== this.mainCurrency){
           let {rate, ratesHistoryPairIndex} = this.getRate(pair, record.createdAt, ratesHistoryPairIndex)
-          fromAmount *= rate
+          fromAmount /= rate
           pairRate = rate
         }
 
@@ -92,7 +92,7 @@ export default {
         let toAmount = record.to.amount
         if (record.to.currency !== this.mainCurrency){
           let {rate, ratesHistoryPairIndex} = this.getRate(pair, record.createdAt, ratesHistoryPairIndex)
-          fromAmount /= rate
+          fromAmount *= rate
           pairRate = rate
         }
 
