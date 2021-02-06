@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6ddb973b-bc80-4ca4-b0b5-931c4a18408e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/shakepay_component.vue" beforeDir="false" afterPath="$PROJECT_DIR$/shakepay_component.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shakepay_test/exercice/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shakepay_test/exercice/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shakepay_test/exercice/shakepay_component.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../shakepay_test/exercice/OLD_shakepay_component.vue" afterDir="false" />
+    </list>
+    <list id="cdd2eaf7-ab62-4746-a915-e4917dafb118" name="wip" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../shakepay_test/exercice" />
+  </component>
+  <component name="ProjectId" id="1o78dmT0OWOxblLXQ3XCLgt2HHN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6ddb973b-bc80-4ca4-b0b5-931c4a18408e" name="Default Changelist" comment="" />
+      <changelist id="cdd2eaf7-ab62-4746-a915-e4917dafb118" name="wip" comment="" />
+      <created>1612626357334</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612626357334</updated>
+      <workItem from="1612626358524" duration="1785000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
