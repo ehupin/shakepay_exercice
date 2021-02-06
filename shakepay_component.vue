@@ -52,28 +52,34 @@ export default {
     }
 
     function getRate(pair, dateStr){
-      console.log(Object.keys(ratesHistory))
+
+      let lookupPair = pair
+      let reverseRate = false
       if (!Object.keys(ratesHistory).includes(pair)){
         const pairCurrencies = pair.split('_')
         const reversedPair = pairCurrencies.reverse().join('_')
         if (!Object.keys(ratesHistory).includes(reversedPair)){
-          console.log(`${reversedPair} not found`)
           return this.rates(pair)
         }
+        lookupPair = reversedPair
+        reverseRate = true
       }
 
 
       const unixDate = moment(dateStr).unix()
-      for (const [index, entry] of ratesHistory[pair].entries()){
+      for (const [index, entry] of ratesHistory[lookupPair].entries()){
         if (entry.createdAt < unixDate){
           continue
         }
-        return {rate: entry.midMarketRate, index}
+        const rate = reverseRate ? 1/entry.midMarketRate : entry.midMarketRate
+        console.log(index)
+        return {rate, index}
       }
     }
 
     let history = (await $.getJSON(this.historyJson)).reverse()
 
+    const last
     const graphEntries = []
     // for (let i=0; i<history.length; i++){
     for (let i=0; i<20; i++){
@@ -94,7 +100,7 @@ export default {
         // compute how much has been sold during conversion
         let fromAmount = record.from.amount
         if (record.from.currency !== this.mainCurrency){
-          const rate = getRate(pair, record.createdAt)
+          const {rate} = getRate(pair, record.createdAt)
           fromAmount *= rate
           // fromAmount *= this.staticRates[pair]
         }
@@ -102,7 +108,7 @@ export default {
         // compute how much has been bougth during conversion
         let toAmount = record.to.amount
         if (record.to.currency !== this.mainCurrency){
-          const rate = getRate(pair, record.createdAt)
+          const {rate} = getRate(pair, record.createdAt)
           fromAmount /= rate
           // toAmount /= this.staticRates[pair]
         }
