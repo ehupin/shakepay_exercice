@@ -51,7 +51,7 @@ export default {
       ratesHistory[pair] = processedPairRates
     }
 
-    function getRate(pair, dateStr){
+    function getRate(pair, dateStr, ratesHistoryPairIndex){
 
       let lookupPair = pair
       let reverseRate = false
@@ -67,7 +67,7 @@ export default {
 
 
       const unixDate = moment(dateStr).unix()
-      for (const [index, entry] of ratesHistory[lookupPair].entries()){
+      for (const [index, entry] of ratesHistory[lookupPair].slice(ratesHistoryPairIndex).entries()){
         if (entry.createdAt < unixDate){
           continue
         }
@@ -79,7 +79,7 @@ export default {
 
     let history = (await $.getJSON(this.historyJson)).reverse()
 
-    const last
+    const lastRateHistoryPairIndex = {}
     const graphEntries = []
     // for (let i=0; i<history.length; i++){
     for (let i=0; i<20; i++){
@@ -95,23 +95,28 @@ export default {
       // impact on the net worth
       if (record.type  === 'conversion'){
 
+
         let pair = `${record.from.currency}_${record.to.currency}`
+
+        // get history rate index for faster lookup
+        let ratesHistoryPairIndex = lastRateHistoryPairIndex[pair] -1
 
         // compute how much has been sold during conversion
         let fromAmount = record.from.amount
         if (record.from.currency !== this.mainCurrency){
-          const {rate} = getRate(pair, record.createdAt)
+          const {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
           fromAmount *= rate
-          // fromAmount *= this.staticRates[pair]
         }
 
         // compute how much has been bougth during conversion
         let toAmount = record.to.amount
         if (record.to.currency !== this.mainCurrency){
-          const {rate} = getRate(pair, record.createdAt)
+          const {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
           fromAmount /= rate
-          // toAmount /= this.staticRates[pair]
         }
+
+        // store history rate index for faster future lookups
+        lastRateHistoryPairIndex[pair] = ratesHistoryPairIndex
 
         // compute new amount after conversion
         newAmount = newAmount - fromAmount + toAmount
@@ -122,7 +127,8 @@ export default {
         let recordAmount = record.amount
         if (record.currency !== this.mainCurrency){
           const pair = `${record.currency}_${this.mainCurrency}`
-          recordAmount *= this.staticRates[pair]
+          const {rate, ratesHistoryPairIndex} = getRate(pair, record.createdAt, ratesHistoryPairIndex)
+          recordAmount *= rate
         }
 
         // compute new amount based on record operation direction
