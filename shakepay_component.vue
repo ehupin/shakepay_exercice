@@ -12,6 +12,7 @@ import $ from "jquery";
 export default {
   data(){
     return {
+      mainCurrency: 'CAD',
       historyJson: 'https://shakepay.github.io/programming-exercise/web/transaction_history.json',
       ratesHistoryJson:{
         'CAD_BTC': 'https://shakepay.github.io/programming-exercise/web/rates_CAD_BTC.json',
@@ -52,26 +53,34 @@ export default {
 
 
       let newAmount = lastAmount
+
+      // as some value might be lost during conversion due to fees, a conversion cannot be considered as having no
+      // impact on the net worth
       if (record.type  === 'conversion'){
 
         let pair = `${record.from.currency}_${record.to.currency}`
 
         let fromAmount = record.from.amount
-        if (record.from.currency !== 'CAD'){
+        if (record.from.currency !== this.mainCurrency){
           fromAmount *= this.rates[pair]
         }
 
         let toAmount = record.to.amount
-        if (record.to.currency !== 'CAD'){
+        if (record.to.currency !== this.mainCurrency){
           toAmount *= this.rates[pair]
         }
 
         newAmount = newAmount - fromAmount + toAmount
 
 
-
-
       } else {
+
+        if (record.currency !== this.mainCurrency){
+          const pair = `${record.from.currency}_${record.to.currency}`
+          fromAmount *= this.rates[pair]
+        }
+
+
         const amountFactor = record.direction === 'credit' ? 1 : -1
         newAmount += (record.amount * amountFactor)
       }
