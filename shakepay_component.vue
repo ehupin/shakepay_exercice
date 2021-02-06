@@ -54,9 +54,21 @@ export default {
       let newAmount = lastAmount
       if (record.type  === 'conversion'){
 
+        let pair = `${record.from.currency}_${record.to.currency}`
+
+        let fromAmount = record.from.amount
         if (record.from.currency !== 'CAD'){
-          recordAmount
+          fromAmount *= this.rates[pair]
         }
+
+        let toAmount = record.to.amount
+        if (record.to.currency !== 'CAD'){
+          toAmount *= this.rates[pair]
+        }
+
+        newAmount = newAmount - fromAmount + toAmount
+
+
 
 
       } else {
