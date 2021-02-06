@@ -55,6 +55,7 @@ export default {
 
     // get all transactions history
     let history = (await $.getJSON(this.historyJson)).reverse()
+    history = history.splice(60,75)
 
     const lastRateHistoryPairIndex = {}
     const graphEntries = []
@@ -125,13 +126,16 @@ export default {
         newAmount += (recordAmount * amountFactor)
 
         description = `${record.direction} of ${record.amount} ${record.currency}`
+        if (record.currency !== this.mainCurrency) {
+          description += `(${recordAmount.toFixed(2)} ${this.mainCurrency})`
+        }
       }
 
       // create new graph entry
       const newEntry = {
         x: moment(record.createdAt).unix(),
         y: newAmount,
-        name: description
+        name:`${description} #${i}`
       }
       graphEntries.push(newEntry)
     }
