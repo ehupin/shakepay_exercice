@@ -120,20 +120,21 @@ export default {
           let {rate, index} = this.getRate(pair, record.createdAt, ratesHistoryPairIndex)
           recordAmount *= rate
 
+          if (record.createdAt == "2018-03-29T21:20:31.768Z"){
+            console.log(pair)
+            console.log(rate)
+          }
+
+
           // store history rate index for faster future lookups
           lastRateHistoryPairIndex[pair] = index
         }
-
 
         // compute new amount based on record operation direction
         const amountFactor = record.direction === 'credit' ? 1 : -1
         const transactionAmount = recordAmount * amountFactor
         newAmount += transactionAmount
 
-        if (record.createdAt == "2018-03-29T21:20:31.768Z"){
-          console.log(transactionAmount)
-          console.log(newAmount)
-        }
 
         description = `${record.direction} of ${record.amount} ${record.currency}`
         if (record.currency !== this.mainCurrency) {
@@ -188,7 +189,11 @@ export default {
         if (entry.createdAt < unixDate){
           continue
         }
-        const rate = reverseRate ? 1/entry.midMarketRate : entry.midMarketRate
+        if (dateStr == "2018-03-29T21:20:31.768Z"){
+          console.log(entry)
+        }
+
+        const rate = reverseRate ? entry.midMarketRate : 1/entry.midMarketRate
         return {rate, index}
   }
 }
