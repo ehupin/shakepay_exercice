@@ -34,23 +34,21 @@ export default {
     const graphEntries = []
     for (let i=0; i<history.length; i++){
       const record = history[i]
+      const lastEntry = graphEntries[graphEntries.length-1]
+      const lastAmount = lastEntry ? lastEntry.y : 0
 
       if (record.type  === 'conversion'){
-        continue
+        
+      } else {
+        const amountFactor = record.direction === 'credit' ? 1 : -1
+        const newAmount = lastAmount + (record.amount * amountFactor)
       }
-
-      const lastEntry = graphEntries[graphEntries.length-1]
-
-      const lastAmount = lastEntry ? lastEntry.y : 0
-      const amountFactor = record.direction === 'credit' ? 1 : -1
-      const newAmount = lastAmount + (record.amount * amountFactor)
 
       const newEntry = {
         x: record.createdAt,
         y: newAmount,
         type: `${record.type}-${record.direction}`
       }
-
       graphEntries.push(newEntry)
     }
     console.log(graphEntries)
