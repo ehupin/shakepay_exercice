@@ -35,12 +35,18 @@ export default {
   },
   async mounted(){
 
-    // let ratesHistory = {}
-    // for (let pair of object.keys(this.ratesHistoryJson)){
-    //   const pairRatesURL = this.ratesHistoryJson[pair]
-    //   const pairRates = await $.getJSON(pairRatesURL)
-    //   ratesHistory[pair] = pairRates
-    // }
+    let ratesHistory = {}
+    for (let pair of Object.keys(this.ratesHistoryJson)){
+      const pairRatesURL = this.ratesHistoryJson[pair]
+      const pairRates = await $.getJSON(pairRatesURL)
+      ratesHistory[pair] = pairRates
+    }
+
+    function getRate(pair, time, lastIndex){
+      for (const [index, entry] of ratesHistory.entries()){
+        
+      }
+    }
 
     let history = (await $.getJSON(this.historyJson)).reverse()
 
@@ -69,7 +75,7 @@ export default {
         // compute how much has been bougth during conversion
         let toAmount = record.to.amount
         if (record.to.currency !== this.mainCurrency){
-          toAmount *= this.rates[pair]
+          toAmount /= this.rates[pair]
         }
 
         // compute new amount after conversion
