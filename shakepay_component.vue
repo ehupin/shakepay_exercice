@@ -35,12 +35,12 @@ export default {
   },
   async mounted(){
 
-    let ratesHistory = {}
-    for (let pair of object.keys(this.ratesHistoryJson)){
-      const pairRatesURL = this.ratesHistoryJson[pair]
-      const pairRates = await $.getJSON(pairRatesURL)
-      ratesHistory[pair] = pairRates
-    }
+    // let ratesHistory = {}
+    // for (let pair of object.keys(this.ratesHistoryJson)){
+    //   const pairRatesURL = this.ratesHistoryJson[pair]
+    //   const pairRates = await $.getJSON(pairRatesURL)
+    //   ratesHistory[pair] = pairRates
+    // }
 
     let history = (await $.getJSON(this.historyJson)).reverse()
 
@@ -60,29 +60,33 @@ export default {
 
         let pair = `${record.from.currency}_${record.to.currency}`
 
+        // compute how much has been sold during conversion
         let fromAmount = record.from.amount
         if (record.from.currency !== this.mainCurrency){
           fromAmount *= this.rates[pair]
         }
 
+        // compute how much has been bougth during conversion
         let toAmount = record.to.amount
         if (record.to.currency !== this.mainCurrency){
           toAmount *= this.rates[pair]
         }
 
+        // compute new amount after conversion
         newAmount = newAmount - fromAmount + toAmount
 
 
       } else {
-
+        // handle record amount conversion if operation has not been done in main currency
+        let recordAmount = record.amount
         if (record.currency !== this.mainCurrency){
-          const pair = `${record.from.currency}_${record.to.currency}`
-          fromAmount *= this.rates[pair]
+          const pair = `${record.currency}_${this.mainCurrency}`
+          recordAmount *= this.rates[pair]
         }
 
-
+        // compute new amount based on record operation direction
         const amountFactor = record.direction === 'credit' ? 1 : -1
-        newAmount += (record.amount * amountFactor)
+        newAmount += (recordAmount * amountFactor)
       }
 
       const newEntry = {
