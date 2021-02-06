@@ -35,10 +35,13 @@ export default {
     }
   },
   async mounted(){
+    // store rates history in object (per pair), pre-process 'createdAt' property for faster lookup then
     let ratesHistory = {}
     for (let pair of Object.keys(this.ratesHistoryJson)){
       const pairRatesURL = this.ratesHistoryJson[pair]
       const pairRates = await $.getJSON(pairRatesURL)
+
+      // convert 'createdAt' string property to a unix time number
       const processedPairRates = []
       for (let i=0; i<pairRates.length; i++){
         const rateRecord = pairRates[i]
@@ -47,18 +50,22 @@ export default {
 
       ratesHistory[pair] = processedPairRates
     }
-    console.log(ratesHistory)
-    return
-    function getRate(pair, timeStr, lastIndex){
-      const time = moment(timeStr).unix()
+
+    function getRate(pair, dateStr){
+      const unixDate = moment(dateStr).unix()
       for (const [index, entry] of ratesHistory.entries()){
+        if (entry.createdAt < unixDate){
+          continue
+        }
+        return {rate: entry.midMarketRate, index}
       }
     }
 
     let history = (await $.getJSON(this.historyJson)).reverse()
 
     const graphEntries = []
-    for (let i=0; i<history.length; i++){
+    // for (let i=0; i<history.length; i++){
+    for (let i=0; i<20; i++){
       const record = history[i]
       const lastEntry = graphEntries[graphEntries.length-1]
       const lastAmount = lastEntry ? lastEntry.y : 0
