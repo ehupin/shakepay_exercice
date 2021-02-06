@@ -132,7 +132,16 @@ export default {
     }
     console.log(graphEntries)
 
-    Highcharts.stockCharts('chart')
+    const chartData = {
+      series:[{
+        name: 'net worth',
+        data: graphEntries
+      }],
+      xAxis: {
+        type: 'datetime'
+      },
+    }
+    Highcharts.stockChart('chart', chartData)
 
   },
   methods: {
