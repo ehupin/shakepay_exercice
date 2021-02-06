@@ -35,14 +35,14 @@ export default {
     for (let i=0; i<history.length; i++){
       const record = history[i]
 
-      if (record.type  == 'conversion'){
+      if (record.type  === 'conversion'){
         continue
       }
 
       const lastEntry = graphEntries[graphEntries.length-1]
 
       const lastAmount = lastEntry ? lastEntry.y : 0
-      const amountFactor = record.direction == 'credit' ? 1 : -1
+      const amountFactor = record.direction === 'credit' ? 1 : -1
       const newAmount = lastAmount + (record.amount * amountFactor)
 
       const newEntry = {

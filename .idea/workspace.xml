@@ -13,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../shakepay_test/exercice" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1o78dmT0OWOxblLXQ3XCLgt2HHN" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -37,7 +37,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1612626357334</updated>
-      <workItem from="1612626358524" duration="1785000" />
+      <workItem from="1612626358524" duration="2327000" />
     </task>
     <servers />
   </component>
