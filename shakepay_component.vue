@@ -29,11 +29,14 @@ export default {
     }
   },
   async mounted(){
-    let history = await $.getJSON(this.historyJson)
+    let history = (await $.getJSON(this.historyJson)).reverse()
+
     const graphEntries = []
+    for (let i=0; i<history.length; i++){
+      const lastEntry = graphEntries[graphEntries.length-1]
 
-    for (let i=0, i<history.length, i++){
-
+      const lastAmount = lastEntry ? lastEntry.y : 0
+      const newAmount = 
     }
 
   }
