@@ -58,8 +58,8 @@ export default {
 
     const lastRateHistoryPairIndex = {}
     const graphEntries = []
-    // for (let i=0; i<history.length; i++){
-    for (let i=0; i<20; i++){
+    for (let i=0; i<history.length; i++){
+    // for (let i=0; i<30; i++){
       const record = history[i]
       const lastEntry = graphEntries[graphEntries.length-1]
       const lastAmount = lastEntry ? lastEntry.y : 0
@@ -124,9 +124,10 @@ export default {
 
       // create new grpah entry
       const newEntry = {
-        x: record.createdAt,
+        x: moment(record.createdAt).unix(),
         y: newAmount,
-        type: `${record.type}-${record.direction}`
+        description: 'popo',
+        name: `${record.type}-${record.direction}`
       }
       graphEntries.push(newEntry)
     }
