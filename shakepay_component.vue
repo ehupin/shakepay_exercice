@@ -35,7 +35,9 @@ export default {
   async mounted(){
     let history = (await $.getJSON(this.historyJson)).reverse()
     let ratesHistory = {}
-    for (let key of object.keys(this.ratesHistoryJson)){
+    for (let pair of object.keys(this.ratesHistoryJson)){
+      const pairRatesURL = this.ratesHistoryJson[pair]
+      const pairRates = await $.getJSON(pairRatesURL)
       
     }
 
