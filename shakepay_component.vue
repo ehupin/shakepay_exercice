@@ -34,6 +34,11 @@ export default {
     const graphEntries = []
     for (let i=0; i<history.length; i++){
       const record = history[i]
+
+      if (record.type  == 'conversion'){
+        continue
+      }
+
       const lastEntry = graphEntries[graphEntries.length-1]
 
       const lastAmount = lastEntry ? lastEntry.y : 0
