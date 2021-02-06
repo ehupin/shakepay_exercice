@@ -81,9 +81,11 @@ export default {
 
         // compute how much has been sold during conversion
         let fromAmount = record.from.amount
+        let pairRate
         if (record.from.currency !== this.mainCurrency){
           let {rate, ratesHistoryPairIndex} = this.getRate(pair, record.createdAt, ratesHistoryPairIndex)
           fromAmount *= rate
+          pairRate = rate
         }
 
         // compute how much has been bougth during conversion
@@ -91,6 +93,7 @@ export default {
         if (record.to.currency !== this.mainCurrency){
           let {rate, ratesHistoryPairIndex} = this.getRate(pair, record.createdAt, ratesHistoryPairIndex)
           fromAmount /= rate
+          pairRate = rate
         }
 
         // store history rate index for faster future lookups
@@ -101,6 +104,7 @@ export default {
         description = `Conversion from `
         description += `${record.from.amount} ${record.from.currency} `
         description += `to ${record.to.amount} ${record.to.currency}`
+        description += `at ${pairRate} on ${pair}`
 
 
       } else {
@@ -130,7 +134,7 @@ export default {
           description += `(${recordAmount.toFixed(3)} ${this.mainCurrency})`
         }
       }
-      newAmount = Number(newAmount).toFixed(2)
+
       // create new graph entry
       const newEntry = {
         x: moment(record.createdAt).unix(),
