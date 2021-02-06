@@ -67,7 +67,7 @@ export default {
 
 
       let newAmount = lastAmount
-
+      let description = ''
       // as some value might be lost during conversion due to fees, a conversion cannot be considered as having no
       // impact on the net worth
       if (record.type  === 'conversion'){
@@ -97,6 +97,9 @@ export default {
 
         // compute new amount after conversion
         newAmount = newAmount - fromAmount + toAmount
+        description = `Conversion from `
+        description += `${record.from.amount} ${record.from.currency} `
+        description += `to ${record.to.amount} ${record.to.currency}`
 
 
       } else {
@@ -120,14 +123,15 @@ export default {
         // compute new amount based on record operation direction
         const amountFactor = record.direction === 'credit' ? 1 : -1
         newAmount += (recordAmount * amountFactor)
+
+        description = `${record.direction} of ${record.amount} ${record.currency}`
       }
 
-      // create new grpah entry
+      // create new graph entry
       const newEntry = {
         x: moment(record.createdAt).unix(),
         y: newAmount,
-        description: 'popo',
-        name: `${record.type}-${record.direction}`
+        name: description
       }
       graphEntries.push(newEntry)
     }
