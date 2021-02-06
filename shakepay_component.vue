@@ -52,8 +52,17 @@ export default {
     }
 
     function getRate(pair, dateStr){
-      console.log(pair)
-      if (!Object.keys(ratesHistory).includes(pair))
+      console.log(Object.keys(ratesHistory))
+      if (!Object.keys(ratesHistory).includes(pair)){
+        const pairCurrencies = pair.split('_')
+        const reversedPair = pairCurrencies.reverse().join('_')
+        if (!Object.keys(ratesHistory).includes(reversedPair)){
+          console.log(`${reversedPair} not found`)
+          return this.rates(pair)
+        }
+      }
+
+
       const unixDate = moment(dateStr).unix()
       for (const [index, entry] of ratesHistory[pair].entries()){
         if (entry.createdAt < unixDate){
